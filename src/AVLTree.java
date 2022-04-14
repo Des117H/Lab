@@ -23,6 +23,7 @@ public class AVLTree {
     // A utility function to right rotate subtree rooted with y
     // See the diagram given above.
     Node rightRotate(Node root) {
+//        System.out.println("p");
         Node p = root.left;
         if (p != null) {
             root.left = p.right;
@@ -30,13 +31,16 @@ public class AVLTree {
             // Perform rotation
             p.right = root;
         }
-        // Return new root
+        else
+            return root;
+//        // Return new root
         return p;
     }
 
     // A utility function to left rotate subtree rooted with x
     // See the diagram given above.
     Node leftRotate(Node root) {
+//        System.out.println("t");
         Node p = root.right;
         if (p != null) {
             root.right = p.left;
@@ -44,6 +48,8 @@ public class AVLTree {
             // Perform rotation
             p.left = root;
         }
+        else
+            return root;
         // Return new root
         return p;
     }
@@ -65,10 +71,12 @@ public class AVLTree {
         if (node == null)
             return (new Node(id, firstName, lastName, phone));
 
-        if (root.id.compareTo(id) > 0)
+        if (node.id.compareTo(id) > 0) {
             node.left = insert(node.left, id, firstName, lastName, phone);
-        else if (root.id.compareTo(id) < 0)
+        }
+        else if (node.id.compareTo(id) < 0) {
             node.right = insert(node.right, id, firstName, lastName, phone);
+        }
         else // Duplicate keys not allowed
             return node;
 
@@ -80,12 +88,14 @@ public class AVLTree {
 
         // If this node becomes unbalanced, then there
         // are 4 cases Left Left Case
-        if (balance > 1 && node.left.id.compareTo(id) > 0)
+        if (balance > 1 && node.left.id.compareTo(id) > 0) {
             return rightRotate(node);
+        }
 
         // Right Right Case
-        if (balance < -1 && node.right.id.compareTo(id) > 0)
+        if (balance < -1 && node.right.id.compareTo(id) < 0) {
             return leftRotate(node);
+        }
 
         // Left Right Case
         if (balance > 1 && node.left.id.compareTo(id) < 0) {
@@ -94,7 +104,7 @@ public class AVLTree {
         }
 
         // Right Left Case
-        if (balance < -1 && node.right.id.compareTo(id) < 0) {
+        if (balance < -1 && node.right.id.compareTo(id) > 0) {
             node.right = rightRotate(node.right);
             return leftRotate(node);
         }
@@ -108,12 +118,10 @@ public class AVLTree {
             return null;
 
         if (node.id.compareTo(id) > 0){
-//            node.left = ;
             return search(node.left, id);
         }
 
         else if (node.id.compareTo(id) < 0){
-//            node.right = ;
             return search(node.right, id);
         }
         else

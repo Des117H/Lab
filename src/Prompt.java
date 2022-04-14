@@ -23,7 +23,6 @@ public class Prompt {
 
     public static void main(String[] args) {
         AVLTree tree = new AVLTree();
-
         try {
             //parsing a CSV file into BufferedReader class constructor
             BufferedReader br = new BufferedReader(new FileReader("src/test.csv"));
@@ -47,17 +46,8 @@ public class Prompt {
         //initialize a character type variable to choice
         char choice;
 
-        System.out.println(tree.root);
-//        System.out.println(tree.root.left);
-//        System.out.println(tree.root.left.left);
-//        System.out.println(tree.root.right);
-//        System.out.println(tree.root);
-//        System.out.println(tree.root);
-//        System.out.println(tree.root);
-
         // perform operation of AVL Tree using switch
-        do
-        {
+        do {
             System.out.println("\nSelect an operation:");
             System.out.println("1. Insert a node");
             System.out.println("2. Search a node");
@@ -72,10 +62,10 @@ public class Prompt {
             System.out.print("Enter your choice: ");
             choice = (char) scanner.nextInt();
             switch (choice) {
-                case 1 :
+                case 1:
                     insertPrompt(tree);
                     break;
-                case 2 :
+                case 2:
 //                    System.out.print("Enter ID to search: ");
 //                    String id = scanner.nextLine();
 //                    id = scanner.nextLine();
@@ -85,29 +75,29 @@ public class Prompt {
                     else
                         System.out.println("null");
                     break;
-                case 3 :
+                case 3:
 //                    System.out.println(tree.getTotalNumberOfNodes());
                     break;
-                case 4 :
+                case 4:
                     System.out.println(tree.checkEmpty());
                     break;
-                case 5 :
+                case 5:
 //                    tree.removeAll();
                     System.out.println("\nTree Cleared successfully");
                     break;
-                case 6 :
+                case 6:
                     System.out.println("\nDisplay AVL Tree in Post order");
 //                    tree.postorderTraversal();
                     break;
-                case 7 :
+                case 7:
                     System.out.println("\nDisplay AVL Tree in Pre order");
                     tree.preOrder(tree.root);
                     break;
-                case 8 :
+                case 8:
                     System.out.println("\nDisplay AVL Tree in In order");
 //                    tree.inorderTraversal();
                     break;
-                default :
+                default:
                     System.out.println("\n ");
                     break;
             }
