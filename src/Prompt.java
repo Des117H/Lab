@@ -68,10 +68,10 @@ public class Prompt {
                     insertPrompt(tree);
                     break;
                 case 2 :
-//                    System.out.print("Enter ID to search: ");
-//                    String id = scanner.nextLine();
-//                    id = scanner.nextLine();
-                    Node temp = tree.search(tree.root, "TAZ7897764");
+                    System.out.print("Enter ID to search: ");
+                    String id = scanner.nextLine();
+                    id = scanner.nextLine();
+                    Node temp = tree.search(tree.root, id);
                     if (temp != null)
                         temp.printNode();
                     else
