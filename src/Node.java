@@ -16,6 +16,9 @@ public class Node {
     }
 
     void printNode() {
-        System.out.println(id + " " + firstName + " " + lastName + " " + phone);
+        if (this != null)
+            System.out.println(id + " " + firstName + " " + lastName + " " + phone);
+        else
+            System.out.println("null");
     }
 }
