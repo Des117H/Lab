@@ -120,9 +120,6 @@ public class Prompt {
     }
 
     public static void main(String[] args) {
-        boolean exit = true;
-        AVLTree tree = readFile("src/test.csv");
-
-        while (runCase(tree, prompt()) != -1) {}
+        while (runCase(readFile("src/test.csv"), prompt()) != -1) {}
     }
 }
