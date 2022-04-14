@@ -26,15 +26,15 @@ public class Prompt {
 
         try {
             //parsing a CSV file into BufferedReader class constructor
-            BufferedReader br = new BufferedReader(new FileReader("src/customers.csv"));
+            BufferedReader br = new BufferedReader(new FileReader("src/test.csv"));
 
             // Remove the first line
-            String line = br.readLine();
+            String line;
+            br.readLine();
 
-            while (line != null) {
+            while ((line = br.readLine()) != null) {
                 String[] customer = line.split(",");
                 tree.root = tree.insert(tree.root, customer[0], customer[1], customer[2], customer[3]);
-                line = br.readLine();
             }
         }
         catch (IOException e) {
@@ -46,6 +46,14 @@ public class Prompt {
         Scanner scanner = new Scanner(System.in);
         //initialize a character type variable to choice
         char choice;
+
+        System.out.println(tree.root);
+//        System.out.println(tree.root.left);
+//        System.out.println(tree.root.left.left);
+//        System.out.println(tree.root.right);
+//        System.out.println(tree.root);
+//        System.out.println(tree.root);
+//        System.out.println(tree.root);
 
         // perform operation of AVL Tree using switch
         do
@@ -68,10 +76,10 @@ public class Prompt {
                     insertPrompt(tree);
                     break;
                 case 2 :
-                    System.out.print("Enter ID to search: ");
-                    String id = scanner.nextLine();
-                    id = scanner.nextLine();
-                    Node temp = tree.search(tree.root, id);
+//                    System.out.print("Enter ID to search: ");
+//                    String id = scanner.nextLine();
+//                    id = scanner.nextLine();
+                    Node temp = tree.search(tree.root, "");
                     if (temp != null)
                         temp.printNode();
                     else
