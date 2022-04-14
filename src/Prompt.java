@@ -50,7 +50,7 @@ public class Prompt {
         // perform operation of AVL Tree using switch
         do
         {
-            System.out.println("\nSelect an operation:\n");
+            System.out.println("\nSelect an operation:");
             System.out.println("1. Insert a node");
             System.out.println("2. Search a node");
             System.out.println("3. Get total number of nodes in AVL Tree");
@@ -62,38 +62,46 @@ public class Prompt {
 
             //get choice from user
             System.out.print("Enter your choice: ");
-            int ch = scanner.nextInt();
-            switch (ch) {
-                case 1 -> {
+            choice = (char) scanner.nextInt();
+            switch (choice) {
+                case 1 :
                     insertPrompt(tree);
-                }
-                case 2 -> {
-                    System.out.println("Enter integer element to search");
-//                    System.out.println(tree.searchElement(scanner.nextInt()));
-                }
-                case 3 -> {
+                    break;
+                case 2 :
+//                    System.out.print("Enter ID to search: ");
+//                    String id = scanner.nextLine();
+//                    id = scanner.nextLine();
+                    Node temp = tree.search(tree.root, "TAZ7897764");
+                    if (temp != null)
+                        temp.printNode();
+                    else
+                        System.out.println("null");
+                    break;
+                case 3 :
 //                    System.out.println(tree.getTotalNumberOfNodes());
-                }
-                case 4 -> {
+                    break;
+                case 4 :
                     System.out.println(tree.checkEmpty());
-                }
-                case 5 -> {
+                    break;
+                case 5 :
 //                    tree.removeAll();
                     System.out.println("\nTree Cleared successfully");
-                }
-                case 6 -> {
+                    break;
+                case 6 :
                     System.out.println("\nDisplay AVL Tree in Post order");
 //                    tree.postorderTraversal();
-                }
-                case 7 -> {
+                    break;
+                case 7 :
                     System.out.println("\nDisplay AVL Tree in Pre order");
                     tree.preOrder(tree.root);
-                }
-                case 8 -> {
+                    break;
+                case 8 :
                     System.out.println("\nDisplay AVL Tree in In order");
 //                    tree.inorderTraversal();
-                }
-                default -> System.out.println("\n ");
+                    break;
+                default :
+                    System.out.println("\n ");
+                    break;
             }
             System.out.println("\nPress 'y' or 'Y' to continue: ");
             choice = scanner.next().charAt(0);

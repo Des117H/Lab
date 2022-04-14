@@ -103,6 +103,23 @@ public class AVLTree {
         return node;
     }
 
+    Node search(Node node, String id) {
+        if (node == null)
+            return null;
+
+        if (node.id.compareTo(id) > 0){
+//            node.left = ;
+            return search(node.left, id);
+        }
+
+        else if (node.id.compareTo(id) < 0){
+//            node.right = ;
+            return search(node.right, id);
+        }
+        else
+            return node;
+    }
+
     // A utility function to print preorder traversal of the tree.
     // The function also prints height of every node
     void preOrder(Node node) {
