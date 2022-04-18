@@ -1,9 +1,5 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 //https://www.javatpoint.com/avl-tree-program-in-java
 //https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
