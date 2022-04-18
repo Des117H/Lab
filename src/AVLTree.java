@@ -156,6 +156,7 @@ public class AVLTree {
         do {
             searchTerm = searchTerm.substring(0, word.length()).toUpperCase();
             bestPartialMatchedNode = getBestPartialMatch(searchTerm, root);
+            System.out.println(searchTerm.length());
         }
         while (searchTerm.length() > 1 && bestPartialMatchedNode == null);
 

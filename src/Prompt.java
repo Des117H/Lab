@@ -87,13 +87,13 @@ public class Prompt {
                 case 2 -> {
                     System.out.print("Enter ID to search: ");
                     id = scanner.nextLine();
-                    Node temp = tree.search(tree.root, id.substring(0, 10));
+                    Node temp = tree.search(tree.root, id.substring(0, 10).toUpperCase());
                     temp.printNode();
                 }
                 case 3 -> {
-                    System.out.println("Enter ID to search: ");
+                    System.out.print("Enter ID to search: ");
                     id = scanner.nextLine();
-                    String[] listID = tree.getBestMatches(id);
+                    String[] listID = tree.getBestMatches(id.toUpperCase());
                     for (String str : listID) {
                         tree.search(tree.root, str).printNode();
                     }
