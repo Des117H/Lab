@@ -56,9 +56,9 @@ public class Prompt {
 
         // perform operation of AVL Tree using switch
         System.out.println("\nSelect an operation:");
-        System.out.println("1. Insert a node");
-        System.out.println("2. Search full a node");
-        System.out.println("3. Search partial a node");
+        System.out.println("1. Add a customer");
+        System.out.println("2. Search full a customer");
+        System.out.println("3. Search partial a customer");
         System.out.println("4. Is AVL Tree empty?");
         System.out.println("5. Remove all nodes from AVL Tree");
         System.out.println("6. Display AVL Tree in Post order");
