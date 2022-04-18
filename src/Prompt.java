@@ -87,7 +87,7 @@ public class Prompt {
                 case 2 -> {
                     System.out.print("Enter ID to search: ");
                     id = scanner.nextLine();
-                    Node temp = tree.search(tree.root, id);
+                    Node temp = tree.search(tree.root, id.substring(0, 10));
                     temp.printNode();
                 }
                 case 3 -> {
