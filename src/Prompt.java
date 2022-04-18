@@ -57,14 +57,14 @@ public class Prompt {
         // perform operation of AVL Tree using switch
         System.out.println("\nSelect an operation:");
         System.out.println("1. Insert a node");
-        System.out.println("2. Search a node");
-        System.out.println("3. Get total number of nodes in AVL Tree");
+        System.out.println("2. Search full a node");
+        System.out.println("3. Search partial a node");
         System.out.println("4. Is AVL Tree empty?");
         System.out.println("5. Remove all nodes from AVL Tree");
         System.out.println("6. Display AVL Tree in Post order");
         System.out.println("7. Display AVL Tree in Pre order");
         System.out.println("8. Display AVL Tree in In order");
-        System.out.println("Enter \"E\" to exit: ");
+        System.out.println("Enter \"E\" to exit");
 
         //get choice from user
         System.out.print("Enter your choice: ");
@@ -79,48 +79,46 @@ public class Prompt {
 
     static void runCase(AVLTree tree) {
         Scanner scanner = new Scanner(System.in);
+        String id;
         while (true)
         {
             switch (prompt()) {
-                case 1:
-                    insertPrompt(tree);
-                    break;
-                case 2:
+                case 1 -> insertPrompt(tree);
+                case 2 -> {
                     System.out.print("Enter ID to search: ");
-                    String id = scanner.nextLine();
                     id = scanner.nextLine();
                     Node temp = tree.search(tree.root, id);
                     temp.printNode();
-                    break;
-                case 3:
-//                    System.out.println(tree.getTotalNumberOfNodes());
-                    break;
-                case 4:
-                    System.out.println(tree.checkEmpty());
-                    break;
-                case 5:
+                }
+                case 3 -> {
+                    System.out.println("Enter ID to search: ");
+                    id = scanner.nextLine();
+                    String[] listID = tree.getBestMatches(id);
+                    for (String str : listID) {
+                        tree.search(tree.root, str).printNode();
+                    }
+                }
+                case 4 -> System.out.println(tree.checkEmpty());
+                case 5 ->
 //                    tree.removeAll();
-                    System.out.println("Tree Cleared successfully");
-                    break;
-                case 6:
-                    System.out.println("Display AVL Tree in Post order");
+                        System.out.println("Tree Cleared successfully");
+                case 6 -> System.out.println("Display AVL Tree in Post order");
+
 //                    tree.postorderTraversal();
-                    break;
-                case 7:
+                case 7 -> {
                     System.out.println("Display AVL Tree in Pre order");
                     tree.preOrder(tree.root);
-                    break;
-                case -1:
+                }
+                case -1 -> {
                     System.out.println("Goodbye");
                     return;
-                default:
-                    System.out.println("Wrong usage!!!");
-                    break;
+                }
+                default -> System.out.println("Wrong usage!!!");
             }
         }
     }
 
     public static void main(String[] args) {
-        runCase(readFile("src/test.csv"));
+        runCase(readFile("src/customers.csv"));
     }
 }

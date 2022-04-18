@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 //https://www.javatpoint.com/avl-tree-program-in-java
@@ -126,6 +128,69 @@ public class AVLTree {
         }
         else
             return node;
+    }
+
+    private boolean isInTree (String key, Node node){
+        if (node == null)
+            return false;
+
+        if (key.compareTo (node.id) < 0)
+            return isInTree (key, node.left);
+
+        if (key.compareTo (node.id) > 0)
+            return isInTree (key, node.right);
+        return true;
+    }
+
+    public String[] getBestMatches(String word) {
+        if (isInTree(word.toLowerCase(), root))
+            return new String[] { word };
+        if (word.length() <= 1)
+            return new String[0];
+        // strip off last letter and search for first node that "starts with" the term
+        String searchTerm = word;
+        Node bestPartialMatchedNode = null;
+        do {
+            searchTerm = searchTerm.substring(0, word.length()).toUpperCase();
+            bestPartialMatchedNode = getBestPartialMatch(searchTerm, root);
+        }
+        while (searchTerm.length() > 1 && bestPartialMatchedNode == null);
+        if (bestPartialMatchedNode == null)
+            return new String[0];            // nothing to suggest
+        LinkedList<String> bestMatches = new LinkedList<String>();
+        LinkedList<Node> currentLevel = new LinkedList<Node>();
+        LinkedList<Node> nextLevel = new LinkedList<Node>();
+        currentLevel.push(bestPartialMatchedNode);
+        while(!currentLevel.isEmpty() && bestMatches.size() < 10){
+            Node node = currentLevel.pollLast();
+            if (node != null) {
+                if (node.id.startsWith(searchTerm))
+                    bestMatches.add(node.id);
+                if(node.left != null)
+                    nextLevel.push(node.left);
+                if(node.right != null)
+                    nextLevel.push(node.right);
+                if (currentLevel.isEmpty()) {
+                    LinkedList<Node> temp = nextLevel;
+                    nextLevel = currentLevel;
+                    currentLevel = temp;
+                }
+            }
+        }
+        Collections.sort(bestMatches);
+        return bestMatches.toArray(new String[bestMatches.size()]);
+    }
+
+    private Node getBestPartialMatch(String key, Node node) {
+        if (node == null)
+            return null;
+        if (node.id.startsWith(key))
+            return node;
+        if (key.compareTo (node.id) < 0)
+            return getBestPartialMatch (key, node.left);
+        if (key.compareTo (node.id) > 0)
+            return getBestPartialMatch (key, node.right);
+        return null;
     }
 
     // A utility function to print preorder traversal of the tree.
