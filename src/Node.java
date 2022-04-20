@@ -14,10 +14,19 @@ public class Node {
         left = right = null;
         height = 1;
     }
+    public Node() {
+        this.id = "";
+        this.firstName = "";
+        this.lastName = "";
+        this.phone = "";
+        left = right = null;
+        height = 1;
+    }
 
     void printNode() {
         if (this != null)
-            System.out.println(id + " " + firstName + " " + lastName + " " + phone);
+//            (id.charAt(0) - 'A' + 1)
+            System.out.println( id + " " + firstName + " " + lastName + " " + phone);
         else
             System.out.println("null");
     }

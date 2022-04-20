@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Prompt {
-    static void insertPrompt(AVLTree tree) {
+
+    static Map<String, String, String, String> map = new Map<>();
+    static Trie tree = new Trie();
+    static void insertPrompt(Trie treeID) {
+        treeID.root = new TrieNode();
         Scanner scanner = new Scanner(System.in);
         String[] detail = new String[4];
 
@@ -18,11 +22,12 @@ public class Prompt {
         System.out.print("Phone number: ");
         detail[3] = scanner.nextLine();
 
-        tree.insert(tree.root, detail[0], detail[1], detail[2], detail[3]);
+        treeID.insert(detail[0]);
+        map.add(detail[0], detail[1], detail[2], detail[3]);
     }
 
-    static AVLTree readFile(String path){
-        AVLTree tree = new AVLTree();
+    static void readFile(String path){
+        tree.root = new TrieNode();
         try {
             //parsing a CSV file into BufferedReader class constructor
             BufferedReader br = new BufferedReader(new FileReader(path));
@@ -33,15 +38,14 @@ public class Prompt {
 
             while ((line = br.readLine()) != null) {
                 String[] customer = line.split(",");
-                tree.root = tree.insert(tree.root, customer[0], customer[1], customer[2], customer[3]);
+                tree.insert(customer[0]);
+                map.add(customer[0], customer[1], customer[2], customer[3]);
             }
         }
         catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-
-        return tree;
     }
 
     private static boolean isNumeric(String str){
@@ -77,7 +81,7 @@ public class Prompt {
         return -2;
     }
 
-    static void runCase(AVLTree tree) {
+    static void runCase(Trie treeID, Map<String, String, String, String> hashMap) {
         Scanner scanner = new Scanner(System.in);
         String id;
         while (true)
@@ -87,27 +91,23 @@ public class Prompt {
                 case 2 -> {
                     System.out.print("Enter ID to search: ");
                     id = scanner.nextLine();
-                    Node temp = tree.search(tree.root, id.substring(0, 10).toUpperCase());
+                    treeID.isInTrie( id.toUpperCase());
                     temp.printNode();
                 }
                 case 3 -> {
                     System.out.print("Enter ID to search: ");
                     id = scanner.nextLine();
-                    String[] listID = tree.getBestMatches(id.toUpperCase());
+                    String[] listID = treeID.getBestMatches(id.toUpperCase());
                     for (String str : listID) {
-                        tree.search(tree.root, str).printNode();
+                        Node node = treeID.search(treeID.root, str);
+                        if (node != null) {
+                            node.printNode();
+                        }
                     }
                 }
-                case 4 -> System.out.println(tree.checkEmpty());
-                case 5 ->
+                case 5 ->{
 //                    tree.removeAll();
-                        System.out.println("Tree Cleared successfully");
-                case 6 -> System.out.println("Display AVL Tree in Post order");
-
-//                    tree.postorderTraversal();
-                case 7 -> {
-                    System.out.println("Display AVL Tree in Pre order");
-                    tree.preOrder(tree.root);
+                    System.out.println("Tree Cleared successfully");
                 }
                 case -1 -> {
                     System.out.println("Goodbye");
@@ -119,6 +119,7 @@ public class Prompt {
     }
 
     public static void main(String[] args) {
-        runCase(readFile("src/customers.csv"));
+        readFile("src/test.csv");
+        runCase(tree, map);
     }
 }

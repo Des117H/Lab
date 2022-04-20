@@ -1,6 +1,3 @@
-import java.util.Collections;
-import java.util.LinkedList;
-
 //https://www.javatpoint.com/avl-tree-program-in-java
 //https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
 
@@ -112,7 +109,7 @@ public class AVLTree {
     }
 
     Node search(Node node, String id) {
-        if (node == null)
+        if (node == null || id == null)
             return null;
 
         if (node.id.compareTo(id) > 0){
@@ -124,6 +121,10 @@ public class AVLTree {
         }
         else
             return node;
+    }
+
+    public boolean isInTree (String key){
+        return isInTree (key, root);
     }
 
     private boolean isInTree (String key, Node node){
@@ -148,28 +149,32 @@ public class AVLTree {
         // strip off last letter and search for first node that "starts with" the term
         String searchTerm = word;
         Node bestPartialMatchedNode = null;
+        int time = 0;
 
         do {
-            searchTerm = searchTerm.substring(0, word.length()).toUpperCase();
+            searchTerm = searchTerm.substring(0, word.length() - (time++)).toUpperCase();
+            System.out.println(searchTerm);
             bestPartialMatchedNode = getBestPartialMatch(searchTerm, root);
-            System.out.println(searchTerm.length());
         }
-        while (searchTerm.length() > 1 && bestPartialMatchedNode == null);
+        while (searchTerm.length() >= 1 && bestPartialMatchedNode == null);
 
-        if (bestPartialMatchedNode == null)
-            return new String[0];            // nothing to suggest
+        if (searchTerm.equals(""))
+            return new String[0];
 
-        LinkedList<String> bestMatches = new LinkedList<String>();
+        String[] bestMatches = new String[10];
         LinkedList<Node> currentLevel = new LinkedList<Node>();
         LinkedList<Node> nextLevel = new LinkedList<Node>();
         currentLevel.push(bestPartialMatchedNode);
+        int i = 0;
 
-        while(!currentLevel.isEmpty() && bestMatches.size() < 10){
+        while(!currentLevel.isEmpty() && i < 10){
             Node node = currentLevel.pollLast();
 
             if (node != null) {
-                if (node.id.startsWith(searchTerm))
-                    bestMatches.add(node.id);
+                System.out.println(searchTerm + " " + node.id + " " + node.id.startsWith(searchTerm));
+                if (node.id.startsWith(searchTerm)) {
+                    bestMatches[i++] = node.id;
+                }
 
                 if(node.left != null)
                     nextLevel.push(node.left);
@@ -184,8 +189,7 @@ public class AVLTree {
                 }
             }
         }
-        Collections.sort(bestMatches);
-        return bestMatches.toArray(new String[bestMatches.size()]);
+        return bestMatches;
     }
 
     private Node getBestPartialMatch(String key, Node node) {
@@ -204,6 +208,43 @@ public class AVLTree {
         return null;
     }
 
+//    public Node[] searchPartial(String partial) {
+//        Node[] result = new Node[] {null, null, null, null, null, null, null, null, null, null};
+//        int pos = 0;
+//        if (partial.length() < 1)
+//            return null;
+//
+//        Node bestMatch = getBestPartialMatch(partial, root);
+//
+//        if (bestMatch == null)
+//            return null;
+//        result[pos++] = bestMatch;
+//
+//        void printPostorder(Node node)
+//        {
+//            if (node == null)
+//                return;
+//
+//            // first recur on left subtree
+//            printPostorder(node.left);
+//
+//            // then recur on right subtree
+//            printPostorder(node.right);
+//
+//            // now deal with the node
+//            System.out.print(node.key + " ");
+//        }
+//
+//        return result;
+//    }
+
+//    public void update(String id, Node node) {
+//        Node result = search(node, id);
+//        if (result != null) {
+//
+//        }
+//    }
+
     // A utility function to print preorder traversal of the tree.
     // The function also prints height of every node
     void preOrder(Node node) {
@@ -212,5 +253,23 @@ public class AVLTree {
             preOrder(node.left);
             preOrder(node.right);
         }
+    }
+
+    void inOrder(Node node)
+    {
+        if (node == null)
+            return;
+        inOrder(node.left);
+        node.printNode();
+        inOrder(node.right);
+    }
+
+    void postOrder(Node node)
+    {
+        if (node == null)
+            return;
+        postOrder(node.left);
+        postOrder(node.right);
+        node.printNode();
     }
 }
