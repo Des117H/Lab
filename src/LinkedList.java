@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class LinkedList<T> {
 
     // this class is used as a container to data
@@ -35,6 +37,26 @@ public class LinkedList<T> {
         head = n;
         size++;
         return true;
+    }
+
+    public T get(int index) {
+        Node<T> node = head;
+        if (!isEmpty()) {
+            while ((--size != index))
+                node = node.next;
+            return node.data;
+        }
+        return null;
+    }
+
+    public void set(int index, T data) {
+        Node<T> node = head;
+        if (!isEmpty()) {
+            while ((--size != index))
+                node = node.next;
+            node = data;
+            return;
+        }
     }
 
     public boolean pop() {
