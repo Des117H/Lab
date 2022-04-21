@@ -1,20 +1,32 @@
-class HashNode<I, F, L, P> {
-    I id;
-    F firstName;
-    L lastName;
-    P phone;
-    final int hashCode;
-
-    // Reference to next node
-    HashNode<I, F, L, P> next;
+class HashNode {
+    String id;
+    String firstName;
+    String lastName;
+    String phone;
+    int hashCode;
+    int hashedTime;
 
     // Constructor
-    public HashNode(I id, F firstName, L lastName, P phone, int hashCode)
-    {
+    public HashNode() {
+        this.id = "";
+        this.firstName = "";
+        this.lastName = "";
+        this.phone = "";
+    }
+
+    public HashNode(String id, String firstName, String lastName, String phone, int hashCode) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.hashCode = hashCode;
+    }
+
+    public void printNode() {
+        if (this == null) {
+            System.out.println("There is no user");
+            return;
+        }
+        System.out.println(id + " " + firstName + " " + lastName + " " + phone);
     }
 }

@@ -1,14 +1,16 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Scanner;
+
+import static java.lang.Math.pow;
 
 public class Prompt {
 
-    static Map<String, String, String, String> map = new Map<>();
+    static Hash map = new Hash();
     static Trie tree = new Trie();
-    static void insertPrompt(Trie treeID) {
-        treeID.root = new TrieNode();
+    static void insertPrompt() {
         Scanner scanner = new Scanner(System.in);
         String[] detail = new String[4];
 
@@ -22,8 +24,46 @@ public class Prompt {
         System.out.print("Phone number: ");
         detail[3] = scanner.nextLine();
 
-        treeID.insert(detail[0]);
+        tree.insert(detail[0]);
         map.add(detail[0], detail[1], detail[2], detail[3]);
+    }
+
+    static void updatePrompt() {
+        Scanner scanner = new Scanner(System.in);
+        String detail;
+
+        System.out.println("Please enter customer's detail\nIf you want to remain the same data, please enter null");
+        System.out.println("Enter ID to update:");
+        String id = scanner.nextLine();
+        if(tree.isInTrie(id) != null) {
+            System.out.print("First name: ");
+            detail = scanner.nextLine();
+            if (!Objects.equals(detail, "null")) {
+                map.get(id).firstName = detail;
+            }
+            System.out.print("Last name: ");
+            detail = scanner.nextLine();
+            if (!Objects.equals(detail, "null")) {
+                map.get(id).lastName = detail;
+            }
+            System.out.print("Phone number: ");
+            detail = scanner.nextLine();
+            if (!Objects.equals(detail, "null")) {
+                map.get(id).phone = detail;
+            }
+        }
+    }
+
+    static int hashCode(String str, int hashedTime) {
+        long result = 0, number = 0, character = 0, converted = 0;
+
+        for (int i = 0; i < str.length(); i++) {
+            converted += str.charAt(i) * pow(37, i);
+        }
+
+        result = converted % 10000000;
+
+        return (int) result;
     }
 
     static void readFile(String path){
@@ -61,13 +101,9 @@ public class Prompt {
         // perform operation of AVL Tree using switch
         System.out.println("\nSelect an operation:");
         System.out.println("1. Add a customer");
-        System.out.println("2. Search full a customer");
-        System.out.println("3. Search partial a customer");
-        System.out.println("4. Is AVL Tree empty?");
-        System.out.println("5. Remove all nodes from AVL Tree");
-        System.out.println("6. Display AVL Tree in Post order");
-        System.out.println("7. Display AVL Tree in Pre order");
-        System.out.println("8. Display AVL Tree in In order");
+        System.out.println("1. Update a customer");
+        System.out.println("3. Search full a customer");
+        System.out.println("4. Search partial a customer");
         System.out.println("Enter \"E\" to exit");
 
         //get choice from user
@@ -81,33 +117,32 @@ public class Prompt {
         return -2;
     }
 
-    static void runCase(Trie treeID, Map<String, String, String, String> hashMap) {
+    static void runCase(Trie treeID, Hash hashMap) {
         Scanner scanner = new Scanner(System.in);
         String id;
         while (true)
         {
             switch (prompt()) {
-                case 1 -> insertPrompt(tree);
-                case 2 -> {
-                    System.out.print("Enter ID to search: ");
-                    id = scanner.nextLine();
-                    treeID.isInTrie( id.toUpperCase());
-                    temp.printNode();
-                }
+                case 1 -> insertPrompt();
+                case 2 -> updatePrompt();
                 case 3 -> {
                     System.out.print("Enter ID to search: ");
                     id = scanner.nextLine();
-                    String[] listID = treeID.getBestMatches(id.toUpperCase());
-                    for (String str : listID) {
-                        Node node = treeID.search(treeID.root, str);
-                        if (node != null) {
-                            node.printNode();
+                    hashMap.get(treeID.isInTrie(id.toUpperCase())).printNode();
+                }
+                case 4 -> {
+                    System.out.print("Enter ID to search: ");
+                    id = scanner.nextLine();
+                    String[] listID = treeID.searchPartial(id.toUpperCase());
+                    if (listID != null) {
+                        for (String str : listID) {
+                            if (str != null)
+                                hashMap.get(str).printNode();
                         }
                     }
-                }
-                case 5 ->{
-//                    tree.removeAll();
-                    System.out.println("Tree Cleared successfully");
+                    else {
+                        System.out.println("There is no user.");
+                    }
                 }
                 case -1 -> {
                     System.out.println("Goodbye");
