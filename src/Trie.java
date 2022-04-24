@@ -4,14 +4,14 @@ public class Trie {
 
     // Alphabet size (# of symbols)
     static final int ALPHABET_SIZE = 36;
-    static TrieNode root;
+    TrieNode root;
     static String[] id = new String[10];
     static int size = 0;
 
     // If not present, inserts key into trie
     // If the key is prefix of trie node,
     // just marks leaf node
-    static void insert(String key) {
+    void insert(String key) {
         int length = key.length();
         int index;
 
@@ -34,7 +34,7 @@ public class Trie {
     }
 
     // Returns true if key presents in trie, else false
-    static String isInTrie(String word) {
+    boolean isInTrie(String word) {
         int length = word.length();
         int index;
         TrieNode pCrawl = root;
@@ -47,17 +47,15 @@ public class Trie {
                 index = word.charAt(level) - 'A';
 
             if (pCrawl.children[index] == null)
-                return null;
+                return false;
 
             pCrawl = pCrawl.children[index];
         }
 
-        if (pCrawl.isEndOfWord)
-            return word;
-        return null;
+        return pCrawl.isEndOfWord;
     }
 
-    static String[] searchPartial(String partial) {
+    String[] searchPartial(String partial) {
 
         int length = partial.length();
         TrieNode pCrawl = root;
@@ -84,7 +82,7 @@ public class Trie {
         return id;
     }
 
-    static void partialRecursion (TrieNode node, String partial) {
+    void partialRecursion (TrieNode node, String partial) {
         if (node == null)
             return;
 
@@ -101,11 +99,14 @@ public class Trie {
                 if (node.children[i].isEndOfWord) {
                     id[size++] = temp;
                 }
+
+                if (size > 9)
+                    return;
             }
         }
     }
 
-    static String[] reset() {
+    String[] reset() {
         size = 0;
         return new String[10];
     }

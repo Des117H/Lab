@@ -4,19 +4,18 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 
-import static java.lang.Math.pow;
-
 public class Prompt {
 
     static Hash map = new Hash();
     static Trie tree = new Trie();
+
     static void insertPrompt() {
         Scanner scanner = new Scanner(System.in);
         String[] detail = new String[4];
 
         System.out.println("Please enter customer's detail");
         System.out.print("Customer ID: ");
-        detail[0] = scanner.nextLine();
+        detail[0] = scanner.nextLine().toUpperCase();
         System.out.print("First name: ");
         detail[1] = scanner.nextLine();
         System.out.print("Last name: ");
@@ -33,9 +32,9 @@ public class Prompt {
         String detail;
 
         System.out.println("Please enter customer's detail\nIf you want to remain the same data, please enter null");
-        System.out.println("Enter ID to update:");
-        String id = scanner.nextLine();
-        if(tree.isInTrie(id) != null) {
+        System.out.print("Enter ID to update:");
+        String id = scanner.nextLine().toUpperCase();
+        if(tree.isInTrie(id)) {
             System.out.print("First name: ");
             detail = scanner.nextLine();
             if (!Objects.equals(detail, "null")) {
@@ -54,16 +53,30 @@ public class Prompt {
         }
     }
 
-    static int hashCode(String str, int hashedTime) {
-        long result = 0, number = 0, character = 0, converted = 0;
+    static void searchFullPrompt() {
+        Scanner scanner = new Scanner(System.in);
+        String id;
+        System.out.print("Enter ID to search: ");
+        id = scanner.nextLine().toUpperCase();
+        if (tree.isInTrie(id))
+            map.get(id).printNode();
+    }
 
-        for (int i = 0; i < str.length(); i++) {
-            converted += str.charAt(i) * pow(37, i);
+    static void searchPartialPrompt() {
+        Scanner scanner = new Scanner(System.in);
+        String id;
+        System.out.print("Enter ID to search: ");
+        id = scanner.nextLine().toUpperCase();
+        String[] listID = tree.searchPartial(id);
+        if (listID != null) {
+            for (String str : listID) {
+                if (str != null)
+                    map.get(str).printNode();
+            }
         }
-
-        result = converted % 10000000;
-
-        return (int) result;
+        else {
+            System.out.println("There is no user.");
+        }
     }
 
     static void readFile(String path){
@@ -88,7 +101,7 @@ public class Prompt {
         }
     }
 
-    private static boolean isNumeric(String str){
+    static boolean isNumeric(String str){
         return str != null && str.matches("[0-9.]+");
     }
 
@@ -117,33 +130,13 @@ public class Prompt {
         return -2;
     }
 
-    static void runCase(Trie treeID, Hash hashMap) {
-        Scanner scanner = new Scanner(System.in);
-        String id;
-        while (true)
-        {
+    static void runCase() {
+        while (true) {
             switch (prompt()) {
                 case 1 -> insertPrompt();
                 case 2 -> updatePrompt();
-                case 3 -> {
-                    System.out.print("Enter ID to search: ");
-                    id = scanner.nextLine();
-                    hashMap.get(treeID.isInTrie(id.toUpperCase())).printNode();
-                }
-                case 4 -> {
-                    System.out.print("Enter ID to search: ");
-                    id = scanner.nextLine();
-                    String[] listID = treeID.searchPartial(id.toUpperCase());
-                    if (listID != null) {
-                        for (String str : listID) {
-                            if (str != null)
-                                hashMap.get(str).printNode();
-                        }
-                    }
-                    else {
-                        System.out.println("There is no user.");
-                    }
-                }
+                case 3 -> searchFullPrompt();
+                case 4 -> searchPartialPrompt();
                 case -1 -> {
                     System.out.println("Goodbye");
                     return;
@@ -154,7 +147,7 @@ public class Prompt {
     }
 
     public static void main(String[] args) {
-        readFile("src/test.csv");
-        runCase(tree, map);
+        readFile("src/customers.csv");
+        runCase();
     }
 }

@@ -1,38 +1,44 @@
-import static java.lang.Math.pow;
+import static java.lang.Math.*;
 
 // Class to represent entire hash table
 class Hash {
-    // bucketArray is used to store array of chains
+    // Size of array
+    static final int SIZE = 10000000;
+    // Array is used to store value
     public HashNode[] hashList;
 
     // Constructor: Initializes capacity, size and empty chains.
     public Hash() {
-        hashList = new HashNode[10000000];
+        hashList = new HashNode[SIZE];
     }
 
-    static int hashCode(String str, int hashedTime) {
-        long result = 0, number = 0, character = 0, converted = 0;
-
+    // Hash function
+    int hashCode(String str) {
+        long converted = 0;
         for (int i = 0; i < str.length(); i++) {
             converted += str.charAt(i) * pow(37, i);
         }
+        return toIntExact(converted % SIZE);
+    }
 
-        result = converted % 10000000;
-
-        return (int) result + hashedTime;
+    int hashCode2(String str) {
+        long converted = 0;
+        for (int i = 0; i < str.length(); i++) {
+            converted += str.charAt(i) * pow(97, i);
+        }
+        return toIntExact(converted % SIZE);
     }
 
     // Returns value for a key
     public HashNode get(String id) {
         int hashedTime = 0;
-        int hashCode = hashCode(id, hashedTime);
+        int hashedID = hashCode(id) % SIZE;
         while (true) {
-            if (hashList[hashCode].id.compareTo(id) == 0) {
-                return hashList[hashCode];
+            if (hashList[hashedID].id.compareTo(id) == 0) {
+                return hashList[hashedID];
             }
             else {
-                hashedTime++;
-                hashCode = hashCode(id, hashedTime);
+                hashedID = (hashCode(id) + (++hashedTime) * hashCode2(id)) % SIZE;
             }
         }
     }
@@ -40,8 +46,7 @@ class Hash {
     // Adds a key value pair to hash
     public void add(String id, String firstName, String lastName, String phone) {
         int hashedTime = 0;
-        int hashedID = hashCode(id, hashedTime);
-//        System.out.println(id + " " + hashedID);
+        int hashedID = hashCode(id);
 
         // Check if key is already present
         while (true) {
@@ -49,10 +54,8 @@ class Hash {
                 hashList[hashedID] = new HashNode(id, firstName, lastName, phone, hashedID);
                 return;
             }
-            else {
-                hashedTime++;
-                hashedID = hashCode(id, hashedTime);
-            }
+            else
+                hashedID = (hashCode(id) + (++hashedTime) * hashCode2(id));
         }
     }
 }
