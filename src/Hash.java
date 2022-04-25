@@ -30,6 +30,8 @@ class Hash {
     }
 
     // Returns value for a key
+    // Best: 1
+    // Worst: n
     public HashNode get(String id) {
         int hashedTime = 0;
         int hashedID = hashCode(id) % SIZE;
@@ -44,6 +46,8 @@ class Hash {
     }
 
     // Adds a key value pair to hash
+    // Best: 1
+    // Worst: n
     public void add(String id, String firstName, String lastName, String phone) {
         int hashedTime = 0;
         int hashedID = hashCode(id);
@@ -51,11 +55,13 @@ class Hash {
         // Check if key is already present
         while (true) {
             if (hashList[hashedID] == null) {
-                hashList[hashedID] = new HashNode(id, firstName, lastName, phone, hashedID);
+                hashList[hashedID] = new HashNode(id, firstName, lastName, phone);
                 return;
             }
             else
                 hashedID = (hashCode(id) + (++hashedTime) * hashCode2(id));
+            if (hashedTime > SIZE)
+                return;
         }
     }
 }

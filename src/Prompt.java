@@ -9,6 +9,8 @@ public class Prompt {
     static Hash map = new Hash();
     static Trie tree = new Trie();
 
+    // Best: 1
+    // Worst: n
     static void insertPrompt() {
         Scanner scanner = new Scanner(System.in);
         String[] detail = new String[4];
@@ -27,6 +29,8 @@ public class Prompt {
         map.add(detail[0], detail[1], detail[2], detail[3]);
     }
 
+    // Best: 1
+    // Worst: 1
     static void updatePrompt() {
         Scanner scanner = new Scanner(System.in);
         String detail;
@@ -53,6 +57,8 @@ public class Prompt {
         }
     }
 
+    // Best: 1
+    // Worst: n
     static void searchFullPrompt() {
         Scanner scanner = new Scanner(System.in);
         String id;
@@ -60,8 +66,12 @@ public class Prompt {
         id = scanner.nextLine().toUpperCase();
         if (tree.isInTrie(id))
             map.get(id).printNode();
+        else
+            System.out.println("There is no customer with id " + id);
     }
 
+    // Best: 1
+    // Worst: n
     static void searchPartialPrompt() {
         Scanner scanner = new Scanner(System.in);
         String id;

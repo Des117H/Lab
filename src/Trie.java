@@ -1,7 +1,6 @@
 import static java.lang.Character.isDigit;
 
 public class Trie {
-
     // Alphabet size (# of symbols)
     static final int ALPHABET_SIZE = 36;
     TrieNode root;
@@ -9,8 +8,9 @@ public class Trie {
     static int size = 0;
 
     // If not present, inserts key into trie
-    // If the key is prefix of trie node,
-    // just marks leaf node
+    // If the key is prefix of trie node, just marks leaf node
+    // Best: 10
+    // Worst: 10
     void insert(String key) {
         int length = key.length();
         int index;
@@ -34,10 +34,12 @@ public class Trie {
     }
 
     // Returns true if key presents in trie, else false
+    // Best: 10
+    // Worst: 10
     boolean isInTrie(String word) {
         int length = word.length();
         int index;
-        TrieNode pCrawl = root;
+        TrieNode node = root;
 
         for (int level = 0; level < length; level++)
         {
@@ -46,15 +48,17 @@ public class Trie {
             else
                 index = word.charAt(level) - 'A';
 
-            if (pCrawl.children[index] == null)
+            if (node.children[index] == null)
                 return false;
 
-            pCrawl = pCrawl.children[index];
+            node = node.children[index];
         }
 
-        return pCrawl.isEndOfWord;
+        return node.isEndOfWord;
     }
 
+    // Best: (10 - W) * S
+    // Worst: (10 - W) * S
     String[] searchPartial(String partial) {
 
         int length = partial.length();
