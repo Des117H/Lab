@@ -60,8 +60,10 @@ class Hash {
             }
             else
                 hashedID = (hashCode(id) + (++hashedTime) * hashCode2(id));
-            if (hashedTime > SIZE)
+            if (hashedTime > SIZE) {
+                System.out.println("Array is full");
                 return;
+            }
         }
     }
 }
