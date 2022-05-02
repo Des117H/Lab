@@ -80,8 +80,9 @@ public class Prompt {
         String[] listID = tree.searchPartial(id);
         if (listID != null) {
             for (String str : listID) {
-                if (str != null)
-                    map.get(str).printNode();
+//                if (str != null)
+//                    map.get(str).printNode();
+                System.out.println(str);
             }
         }
         else {
@@ -157,7 +158,7 @@ public class Prompt {
     }
 
     public static void main(String[] args) {
-        readFile("src/customers.csv");
+        readFile("src/test.csv");
         runCase();
     }
 }
