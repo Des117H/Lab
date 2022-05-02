@@ -96,7 +96,7 @@ public class Trie {
                 if (i > 25)
                     temp += i - 26;
                 else
-                    temp += 'A' + i;
+                    temp += Character.toString('A' + i);
 
                 partialRecursion(node.children[i], temp);
 
