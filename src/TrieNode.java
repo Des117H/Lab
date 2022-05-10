@@ -6,7 +6,8 @@ class TrieNode {
     // isEndOfWord is true if the node represents end of a word
     boolean isEndOfWord;
 
-    TrieNode() {
+    // Constructor
+    public TrieNode() {
         isEndOfWord = false;
         for (int i = 0; i < SIZE; i++)
             children[i] = null;

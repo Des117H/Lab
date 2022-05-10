@@ -13,6 +13,7 @@ class HashNode {
         this.phone = phone;
     }
 
+    // Print data
     public void printNode() {
         System.out.println(id + " " + firstName + " " + lastName + " " + phone);
     }

@@ -3,11 +3,13 @@ import static java.lang.Math.*;
 // Class to represent entire hash table
 class Hash {
     // Size of array
-    static final int SIZE = 10000000;
+    final int SIZE = 10000000;
     // Array is used to store value
     public HashNode[] hashList;
+    // Number of element in array
+    private int elementNumber = 0;
 
-    // Constructor: Initializes capacity, size and empty chains.
+    // Constructor
     public Hash() {
         hashList = new HashNode[SIZE];
     }
@@ -33,12 +35,17 @@ class Hash {
     // Best: 1
     // Worst: n
     public HashNode get(String id) {
+        // Set the hashed time
         int hashedTime = 0;
-        int hashedID = hashCode(id) % SIZE;
+        // Hash first time
+        int hashedID = hashCode(id);
+        // Check for collision
         while (true) {
+            // If there is no collision, return the data
             if (hashList[hashedID].id.compareTo(id) == 0) {
                 return hashList[hashedID];
             }
+            // Else, double hash
             else {
                 hashedID = (hashCode(id) + (++hashedTime) * hashCode2(id)) % SIZE;
             }
@@ -49,18 +56,24 @@ class Hash {
     // Best: 1
     // Worst: n
     public void add(String id, String firstName, String lastName, String phone) {
+        // Set the hashed time
         int hashedTime = 0;
+        // Hash first time
         int hashedID = hashCode(id);
 
-        // Check if key is already present
+        // Check if key is already contain data
         while (true) {
+            // If yes, add data into the node
             if (hashList[hashedID] == null) {
                 hashList[hashedID] = new HashNode(id, firstName, lastName, phone);
+                elementNumber++;
                 return;
             }
+            // If no, double hash
             else
                 hashedID = (hashCode(id) + (++hashedTime) * hashCode2(id));
-            if (hashedTime > SIZE) {
+            // If the array is full, notify user and exit
+            if (elementNumber > SIZE) {
                 System.out.println("Array is full");
                 return;
             }
