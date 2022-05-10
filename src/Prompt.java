@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 
-import static java.lang.Math.pow;
-import static java.lang.Math.toIntExact;
-
 public class Prompt {
 
     static Hash hashArray = new Hash();
@@ -25,7 +22,7 @@ public class Prompt {
         detail[0] = scanner.nextLine().toUpperCase();
 
         // Check if the ID already exist or not
-        // If no, continue get other data
+        // If not, continue get other data
         if (!tree.isInTrie(detail[0])) {
             // Get customer's first name
             System.out.print("First name: ");
@@ -146,12 +143,12 @@ public class Prompt {
     }
 
     // Function to get data from file
-    static void readFile(String path) {
+    static void readFile() {
         // Initialize trie
         tree.root = new TrieNode();
         try {
             //parsing a CSV file into BufferedReader class constructor
-            BufferedReader br = new BufferedReader(new FileReader(path));
+            BufferedReader br = new BufferedReader(new FileReader("src/customers.csv"));
 
             // Remove the first line
             String line;
@@ -229,7 +226,7 @@ public class Prompt {
     }
 
     public static void main(String[] args) {
-        readFile("src/customers.csv");
+        readFile();
         runCase();
     }
 }

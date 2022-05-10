@@ -32,8 +32,7 @@ class Hash {
     }
 
     // Returns value for a key
-    // Best: 1
-    // Worst: n
+    // Best: 1 & Worst: n
     public HashNode get(String id) {
         // Set the hashed time
         int hashedTime = 0;
@@ -53,8 +52,7 @@ class Hash {
     }
 
     // Adds a key value pair to hash
-    // Best: 1
-    // Worst: n
+    // Best: 1 &  Worst: n
     public void add(String id, String firstName, String lastName, String phone) {
         // Set the hashed time
         int hashedTime = 0;
